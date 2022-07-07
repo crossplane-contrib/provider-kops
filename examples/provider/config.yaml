@@ -1,0 +1,5 @@
+apiVersion: kops.crossplane.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: example
+spec: {}

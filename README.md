@@ -39,7 +39,7 @@ Please use the following to reach members of the community:
 
 ## Roadmap
 
-provider-aws goals and milestones are currently tracked in the Crossplane
+provider-kops goals and milestones are currently tracked in the Crossplane
 repository. More information can be found in
 [ROADMAP.md](https://github.com/crossplane/crossplane/blob/master/ROADMAP.md).
 

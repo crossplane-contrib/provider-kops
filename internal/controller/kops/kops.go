@@ -44,8 +44,6 @@ import (
 const (
 	errNotKops               = "managed resource is not a Kops custom resource"
 	errTrackPCUsage          = "cannot track ProviderConfig usage"
-	errGetPC                 = "cannot get ProviderConfig"
-	errGetCreds              = "cannot get credentials"
 	errNewClient             = "cannot create new Service"
 	errDeleteCluster         = "cannot delete Kops cluster from API"
 	errNewCluster            = "cannot create Kops cluster"

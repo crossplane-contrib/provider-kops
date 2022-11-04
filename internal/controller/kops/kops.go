@@ -44,6 +44,8 @@ import (
 const (
 	errNotKops               = "managed resource is not a Kops custom resource"
 	errTrackPCUsage          = "cannot track ProviderConfig usage"
+	errGetPC                 = "cannot get ProviderConfig"
+	errGetCreds              = "cannot get credentials"
 	errNewClient             = "cannot create new Service"
 	errDeleteCluster         = "cannot delete Kops cluster from API"
 	errNewCluster            = "cannot create Kops cluster"
@@ -136,7 +138,7 @@ func (c *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 		return managed.ExternalObservation{ResourceExists: false}, errors.Wrap(err, errGetInstanceGroup)
 	}
 
-	validate, err := util.ValidateKopsCluster(c.kopsClientset, cluster, ig)
+	validate, err := util.ValidateKopsCluster(c.kopsClientset, cluster, ig, cr.Spec.ForProvider.KubernetesApiCertificateTTL)
 	if err != nil {
 		return managed.ExternalObservation{ResourceExists: false}, errors.Wrap(err, errValidateCluster)
 	}
@@ -146,7 +148,7 @@ func (c *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 		return managed.ExternalObservation{ResourceExists: false}, errors.Wrap(fmt.Errorf("%s", res), errEvaluateClusterState)
 	}
 
-	kubeconfig, err := util.GenerateKubeConfig(cluster, c.kopsClientset)
+	kubeconfig, err := util.GenerateKubeConfig(cluster, c.kopsClientset, cr.Spec.ForProvider.KubernetesApiCertificateTTL)
 	if err != nil {
 		return managed.ExternalObservation{ResourceExists: false}, errors.Wrap(err, errGetKubeConfig)
 	}

@@ -18,6 +18,7 @@ package v1alpha1
 
 import (
 	"reflect"
+	"time"
 
 	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -34,11 +35,12 @@ type KopsObservation struct {
 
 // A KopsParameters are the parameters of a Kops.
 type KopsParameters struct {
-	ClusterSpec       kops.ClusterSpec         `json:"clusterSpec"`
-	InstanceGroupSpec []kops.InstanceGroupSpec `json:"instanceGroupSpec"`
-	Domain            string                   `json:"domain"`
-	StateBucket       string                   `json:"stateBucket"`
-	Region            string                   `json:"region"`
+	ClusterSpec                 kops.ClusterSpec         `json:"clusterSpec"`
+	InstanceGroupSpec           []kops.InstanceGroupSpec `json:"instanceGroupSpec"`
+	Domain                      string                   `json:"domain"`
+	StateBucket                 string                   `json:"stateBucket"`
+	Region                      string                   `json:"region"`
+	KubernetesAPICertificateTTL time.Duration            `json:"kubernetesApiCertificateTTL,omitempty"`
 }
 
 // A KopsSpec defines the desired state of a Kops.

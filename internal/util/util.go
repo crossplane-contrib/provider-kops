@@ -68,7 +68,7 @@ func CreateInstanceGroupSpec(cr kopsapi.InstanceGroupSpec) *kopsapi.InstanceGrou
 }
 
 // GetKubeconfigFromKopsState returns a kubeconfig for a given kops cluster
-func GetKubeconfigFromKopsState(kopsCluster *kopsapi.Cluster, kopsClientset kopsClient.Clientset, KubernetesApiCertificateTTL time.Duration) (*rest.Config, error) {
+func GetKubeconfigFromKopsState(kopsCluster *kopsapi.Cluster, kopsClientset kopsClient.Clientset, kubernetesApiCertificateTTL time.Duration) (*rest.Config, error) {
 	builder := kubeconfig.NewKubeconfigBuilder()
 
 	keyStore, err := kopsClientset.KeyStore(kopsCluster)
@@ -91,8 +91,8 @@ func GetKubeconfigFromKopsState(kopsCluster *kopsapi.Cluster, kopsClientset kops
 		return nil, fmt.Errorf("cannot find CA certificate")
 	}
 	// set default ttl to 18 hours
-	if KubernetesApiCertificateTTL == 0 {
-		KubernetesApiCertificateTTL = 18
+	if kubernetesApiCertificateTTL == 0 {
+		kubernetesApiCertificateTTL = 18
 	}
 	req := pki.IssueCertRequest{
 		Signer: fi.CertificateIDCA,
@@ -101,7 +101,7 @@ func GetKubeconfigFromKopsState(kopsCluster *kopsapi.Cluster, kopsClientset kops
 			CommonName:   "kops-operator",
 			Organization: []string{rbac.SystemPrivilegedGroup},
 		},
-		Validity: KubernetesApiCertificateTTL * time.Hour,
+		Validity: kubernetesApiCertificateTTL * time.Hour,
 	}
 	cert, privateKey, _, err := pki.IssueCert(&req, keyStore)
 	if err != nil {
@@ -125,8 +125,8 @@ func GetKubeconfigFromKopsState(kopsCluster *kopsapi.Cluster, kopsClientset kops
 }
 
 // ValidateKopsCluster validates a kops cluster
-func ValidateKopsCluster(kopsClientset kopsClient.Clientset, kopsCluster *kopsapi.Cluster, igs *kopsapi.InstanceGroupList, KubernetesApiCertificateTTL time.Duration) (*validation.ValidationCluster, error) {
-	config, err := GetKubeconfigFromKopsState(kopsCluster, kopsClientset, KubernetesApiCertificateTTL)
+func ValidateKopsCluster(kopsClientset kopsClient.Clientset, kopsCluster *kopsapi.Cluster, igs *kopsapi.InstanceGroupList, kubernetesApiCertificateTTL time.Duration) (*validation.ValidationCluster, error) {
+	config, err := GetKubeconfigFromKopsState(kopsCluster, kopsClientset, kubernetesApiCertificateTTL)
 	if err != nil {
 		return nil, err
 	}
@@ -178,8 +178,8 @@ func EvaluateKopsValidationResult(validation *validation.ValidationCluster) (boo
 }
 
 // GenerateKubeConfig generates a kubeconfig for a given kops cluster
-func GenerateKubeConfig(kopsCluster *kopsapi.Cluster, kopsClientset kopsClient.Clientset, KubernetesApiCertificateTTL time.Duration) ([]byte, error) {
-	config, err := GetKubeconfigFromKopsState(kopsCluster, kopsClientset, KubernetesApiCertificateTTL)
+func GenerateKubeConfig(kopsCluster *kopsapi.Cluster, kopsClientset kopsClient.Clientset, kubernetesApiCertificateTTL time.Duration) ([]byte, error) {
+	config, err := GetKubeconfigFromKopsState(kopsCluster, kopsClientset, kubernetesApiCertificateTTL)
 	if err != nil {
 		return nil, err
 	}

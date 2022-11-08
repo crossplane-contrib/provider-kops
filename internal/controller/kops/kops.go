@@ -136,7 +136,7 @@ func (c *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 		return managed.ExternalObservation{ResourceExists: false}, errors.Wrap(err, errGetInstanceGroup)
 	}
 
-	validate, err := util.ValidateKopsCluster(c.kopsClientset, cluster, ig, cr.Spec.ForProvider.KubernetesApiCertificateTTL)
+	validate, err := util.ValidateKopsCluster(c.kopsClientset, cluster, ig, cr.Spec.ForProvider.KubernetesAPICertificateTTL)
 	if err != nil {
 		return managed.ExternalObservation{ResourceExists: false}, errors.Wrap(err, errValidateCluster)
 	}
@@ -146,7 +146,7 @@ func (c *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 		return managed.ExternalObservation{ResourceExists: false}, errors.Wrap(fmt.Errorf("%s", res), errEvaluateClusterState)
 	}
 
-	kubeconfig, err := util.GenerateKubeConfig(cluster, c.kopsClientset, cr.Spec.ForProvider.KubernetesApiCertificateTTL)
+	kubeconfig, err := util.GenerateKubeConfig(cluster, c.kopsClientset, cr.Spec.ForProvider.KubernetesAPICertificateTTL)
 	if err != nil {
 		return managed.ExternalObservation{ResourceExists: false}, errors.Wrap(err, errGetKubeConfig)
 	}

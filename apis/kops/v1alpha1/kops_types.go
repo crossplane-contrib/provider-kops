@@ -40,7 +40,7 @@ type KopsParameters struct {
 	Domain                      string                   `json:"domain"`
 	StateBucket                 string                   `json:"stateBucket"`
 	Region                      string                   `json:"region"`
-	KubernetesApiCertificateTTL time.Duration            `json:"kubernetesApiCertificateTTL,omitempty"`
+	KubernetesAPICertificateTTL time.Duration            `json:"kubernetesApiCertificateTTL,omitempty"`
 }
 
 // A KopsSpec defines the desired state of a Kops.

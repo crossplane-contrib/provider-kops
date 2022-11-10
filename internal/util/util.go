@@ -227,17 +227,16 @@ func ClusterResourceUpToDate(old, new *kopsapi.ClusterSpec) bool {
 
 // InstanceGroupListResourceUpToDate checks if the instance group list resource is up to date
 func InstanceGroupListResourceUpToDate(old []kopsapi.InstanceGroupSpec, new *kopsapi.InstanceGroupList) bool {
-	for index := range old {
-		if !InstanceGroupResourceUpToDate(&old[index], &new.Items[index].Spec) {
-			return false
+	for _, oldInstance := range old {
+		for _, newInstance := range new.Items {
+			if oldInstance.NodeLabels["kops.k8s.io/instancegroup"] == newInstance.Spec.NodeLabels["kops.k8s.io/instancegroup"] {
+				if !reflect.DeepEqual(oldInstance, newInstance.Spec) {
+					return false
+				}
+			}
 		}
 	}
 	return true
-}
-
-// InstanceGroupResourceUpToDate checks if the instance group resource is up to date
-func InstanceGroupResourceUpToDate(old, new *kopsapi.InstanceGroupSpec) bool {
-	return reflect.DeepEqual(old, new)
 }
 
 // GetClusterStatus returns the cluster status

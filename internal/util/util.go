@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/crossplane-contrib/provider-kops/apis/kops/v1alpha1"
 	"github.com/crossplane/crossplane-runtime/pkg/meta"
-	"github.com/crossplane/provider-kops/apis/kops/v1alpha1"
 	"github.com/pkg/errors"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"

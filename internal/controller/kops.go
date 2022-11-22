@@ -20,8 +20,8 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/controller"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	"github.com/crossplane/provider-kops/internal/controller/config"
-	"github.com/crossplane/provider-kops/internal/controller/kops"
+	"github.com/crossplane-contrib/provider-kops/internal/controller/config"
+	"github.com/crossplane-contrib/provider-kops/internal/controller/kops"
 )
 
 // Setup creates all Kops controllers with the supplied logger and adds them to

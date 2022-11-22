@@ -1,4 +1,4 @@
-module github.com/crossplane/provider-kops
+module github.com/crossplane-contrib/provider-kops
 
 go 1.17
 
